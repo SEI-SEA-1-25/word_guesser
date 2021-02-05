@@ -1,50 +1,36 @@
-/* Constants */
-const WORD_LIST = ['producer', 'brainstorm', 'explosion', 'soup', 'feather']
 
-/* Variables and App State */
-let word = "";
+const WORD_LIST = ['feather', 'offense', 'football', 'marzipan', 'onomonopoeia']
 
-/* DOM References */
-let wordContainer = document.querySelector('#guess-word-container');
-let textBox = document.querySelector('#textbox');
-let messages = document.querySelector('#messages');
+let unGuessedWord = []
 
-/* Functions and app logic */
+let secretWord = "";
 
-// Initialize the game: 
-// 1. Reset state variables
-// 2. Display the word blanks in the DOM
+
+let guessForm = document.getElementById('#guess-form')
+let messageCenter = document.querySelector('#message-container')
+let wordContainer = document.querySelector('#word-container')
+
+
+
 const initialize = event => {
-    word = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)]
-    console.log('The word is:', word);
+    secretWord = WORD_LIST[Math.floor(Math.random( ) * WORD_LIST.length)]
+    // console.log('the secret word is', secretWord);
+    for (let i = 0; i < secretWord.length; i++) {
+        unGuessedWord.push('_')
+        
+    }
+    console.log(unregistered);
+    console.log('the secret word is', secretWord);
     displayWordStatus();
 }
+const handleSubmit = event => {
 
-// Helper function that adds multiple <div>_</div> to DOM
-const displayWordStatus = () => {
-    // Clear(empty) all of the divs children 
-    while(wordContainer.firstChild) {
-        wordContainer.removeChild(wordContainer.firstChild);
-    }
-    for(let i = 0; i < word.length; i++) {
-        let letter = document.createElement('div');
-        letter.textContent = '_'
-        letter.classList.add("letter");
-        wordContainer.appendChild(letter);
-    }
+}
+displayWordStatus = () => {
+     while (wordContainer.firstChild)
+     console.log('');
 }
 
-// On submit event: Guess a letter or guess the whole word
-const guessLetter = event => {
-    event.preventDefault();
-    console.log(`You submitted: ${textBox.value}`);
-}
+document.addEventListener('DOMContentLoaded', initialized);
+document.addEventListener('submit', handleSubmit);
 
-// Display a message to the user in the messagebox
-const displayMessage = msg => { 
-    /* Your code here! */
-}
-
-/* Event Listeners */
-document.addEventListener('DOMContentLoaded', initialize);
-document.addEventListener('submit', guessLetter);
