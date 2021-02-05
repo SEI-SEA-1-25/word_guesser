@@ -2,7 +2,6 @@ body {
     text-align: center;
     margin: 0 auto;
 }
-
 #guess-word-container {
     display: flex;
     justify-content: center;
