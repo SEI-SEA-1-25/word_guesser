@@ -3,11 +3,11 @@ const WORD_LIST = ['producer', 'brainstorm', 'explosion', 'soup', 'feather']
 
 /* Variables and App State */
 let word = "";
-
+let current_word = [];
 /* DOM References */
 let wordContainer = document.querySelector('#guess-word-container');
 let textBox = document.querySelector('#textbox');
-let messages = document.querySelector('#messages');
+let messages = document.querySelector('#messages-container');
 
 /* Functions and app logic */
 
@@ -16,10 +16,29 @@ let messages = document.querySelector('#messages');
 // 2. Display the word blanks in the DOM
 const initialize = event => {
     word = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)]
-    console.log('The word is:', word);
+    for (let i=0; i < word.length; i++) {
+        current_word.push("_");
+    }
     displayWordStatus();
 }
 
+// On submit event: Guess a letter or guess the whole word
+//submit button
+const guessLetter = event => {
+    event.preventDefault();
+    displayMessage()
+    displayWordStatus()
+}
+
+// Display a message to the user in the messagebox
+const displayMessage = msg => { 
+    if (word.includes(textBox.value)) {
+        messages.innerText = (`${textBox.value} is a match!`)
+        current_word[word.indexOf(textBox.value)] = textBox.value
+    } else {
+        messages.innerText = (`${textBox.value} is not a match!`)
+    }
+}
 // Helper function that adds multiple <div>_</div> to DOM
 const displayWordStatus = () => {
     // Clear(empty) all of the divs children 
@@ -28,23 +47,16 @@ const displayWordStatus = () => {
     }
     for(let i = 0; i < word.length; i++) {
         let letter = document.createElement('div');
-        letter.textContent = '_'
+        letter.textContent = current_word[i]
         letter.classList.add("letter");
         wordContainer.appendChild(letter);
     }
-}
 
-// On submit event: Guess a letter or guess the whole word
-const guessLetter = event => {
-    event.preventDefault();
-    console.log(`You submitted: ${textBox.value}`);
-}
-
-// Display a message to the user in the messagebox
-const displayMessage = msg => { 
-    /* Your code here! */
 }
 
 /* Event Listeners */
 document.addEventListener('DOMContentLoaded', initialize);
 document.addEventListener('submit', guessLetter);
+
+
+

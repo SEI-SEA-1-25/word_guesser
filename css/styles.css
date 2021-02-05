@@ -1,6 +1,8 @@
 body {
     text-align: center;
     margin: 0 auto;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(104, 172, 163)
 }
 
 #guess-word-container {
@@ -16,4 +18,10 @@ body {
 
 form {
     margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+#messages-container {
+    font-size: 2em;
 }
