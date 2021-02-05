@@ -26,19 +26,40 @@ const displayWordStatus = () => {
     while(wordContainer.firstChild) {
         wordContainer.removeChild(wordContainer.firstChild);
     }
-    for(let i = 0; i < word.length; i++) {
+    for(let i = 0, j = 1; i < word.length, j < word.length; i++, j++) {
         let letter = document.createElement('div');
         letter.textContent = '_'
-        letter.classList.add("letter");
+        letter.classList.add("letter", + j);
         wordContainer.appendChild(letter);
     }
+    //word = word.split('');
+    //console.log(word)
 }
 
 // On submit event: Guess a letter or guess the whole word
 const guessLetter = event => {
     event.preventDefault();
-    console.log(`You submitted: ${textBox.value}`);
+    //console.log(`You submitted: ${textBox.value}`);
+    letterChoice = textbox.value
+    //console.log(letterChoice)
+    word = word.split('');
+
+    for(i = 0; i < word.length; i ++) {
+        if (letterChoice == word[i]) {
+          // change blank display to letter
+        } else {
+          // display "Incorrect or Make a buzzer sound"
+          // clear submit form
+        }
+    }
 }
+
+// I could keep score later by setting score to some # and then using a decrement operator
+// like score-- and when score equals 0 dispaly 'your out of turns' and a restart button
+
+
+
+
 
 // Display a message to the user in the messagebox
 const displayMessage = msg => { 
