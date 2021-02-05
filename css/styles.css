@@ -3,7 +3,7 @@ body {
     margin: 0 auto;
 }
 
-#guess-word-container {
+#guess-container {
     display: flex;
     justify-content: center;
 }
