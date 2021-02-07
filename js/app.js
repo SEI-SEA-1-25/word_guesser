@@ -7,10 +7,9 @@ let unguessedWord = [];
 let secretWord = '';
 
 /* DOM References */
-let guessForm = document.getElementById('guess-form');
+let guessForm = document.getElementById('textInput');
 let messageContainer = document.querySelector('#message-container');
 let wordContainer = document.querySelector('#word-container');
-let remain = secretWord.length;
 
 /* Functions and Game Logic */
 const initialize = event => {
@@ -18,7 +17,7 @@ const initialize = event => {
 
     for(let i = 0; i < secretWord.length; i++) {
         unguessedWord[i] = '_';
-        // console.log(unguessedWord);
+        console.log(unguessedWord);
     }
     console.log('The secret word is', secretWord)
     displayWordStatus();
@@ -26,32 +25,44 @@ const initialize = event => {
 
 const handleSubmit = event => {
     event.preventDefault();
+    let guess = guessForm.value;
+    if(guess.length == 0) return; // Reject empty submission
+
     let letters = secretWord.split('');
-    while(remain > 0) {
-        let guessAtmpt = wordContainer.value;
-        if (guessAtmpt === 0) {
-            break
-          } if (guessAtmpt == secretWord) {
-                displayWordStatus(`Congrats! You've guessed the whole word!`)
-        } else if(guessAtmpt === 1) {
-            } if (secretWord[i] === guessAtmpt) {
-                unguessedWord[i] = guessAtmpt;
-                remain--;
-                displayWordStatus(`${guessAtmpt} is a match!`)
-            } else {
-                displayWordStatus(`${guessAtmpt} is not a match!`)
+    if(guess.length == 1) { // Guessing one letter
+        if(letters.includes(guess)) {
+            displayMessage(`${guess} is a match!`)
+            for(let i = 0; i < secretWord.length; i++) {
+                if(secretWord[i] == guess) {
+                    unguessedWord[i] = guess;
+                } 
             }
+            displayWordStatus();
+            if(!unguessedWord.includes("_")) {
+                displayMessage("Congrats! You've guessed the whole word!")
+            }
+            
+        } else {
+            displayMessage(`${guess} is not a match.`)
+        }
+    } else {
+        if(guess == secretWord) {
+            displayMessage("Congrats! You've guessed the whole word!")
+            unguessedWord = letters;
+            displayWordStatus();
+        } else {
+            displayMessage(`Sorry! ${guess} is not the word I'm thinking of!`);
+        }
     }
 }
 
 
-//
 displayWordStatus = () => {
 while(wordContainer.firstChild) {
     wordContainer.removeChild(wordContainer.firstChild);
 }
 //add to dom all of the unguessed letters
-unguessedWord.forEach(letter => {
+unguessedWord.forEach( letter => {
     let letterDiv = document.createElement('div');
     letterDiv.textContent = letter;
     letterDiv.classList.add('letter')
@@ -60,6 +71,16 @@ unguessedWord.forEach(letter => {
 }
 
 
+displayMessage = msg => {
+    while(messageContainer.firstChild) {
+        messageContainer.removeChild(messageContainer.firstChild)
+    }
+    let p = document.createElement('p');
+    p.textContent = msg;
+    messageContainer.appendChild(p);
+}
+
+
 /* Event Listeners */
 document.addEventListener('DOMContentLoaded', initialize)
-guessForm.addEventListener('click', handleSubmit);
+document.addEventListener('click', handleSubmit);
